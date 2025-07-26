@@ -1,0 +1,58 @@
+{
+  "name": "推しウマ記録アプリ",
+  "short_name": "推しウマ記録",
+  "description": "競馬ファンが推しの競走馬を記録・応援できるスマホ推奨PWAアプリ",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f5f5",
+  "theme_color": "#2196F3",
+  "orientation": "portrait-primary",
+  "scope": "./",
+  "lang": "ja",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["sports", "entertainment", "utilities"],
+  "screenshots": [
+    {
+      "src": "images/screenshot-mobile.png",
+      "sizes": "375x812",
+      "type": "image/png",
+      "platform": "mobile",
+      "label": "推しウマ一覧画面"
+    }
+  ],
+  "features": [
+    "offline",
+    "camera",
+    "local-storage"
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "shortcuts": [
+    {
+      "name": "新規登録",
+      "short_name": "登録",
+      "description": "新しい推しウマを登録する",
+      "url": "./?action=add",
+      "icons": [
+        {
+          "src": "images/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

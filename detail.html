@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>推しウマ詳細 - 推しウマ記録アプリ</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#2196F3">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="images/icon-192.png">
+</head>
+<body>
+    <header class="header">
+        <button class="back-btn" onclick="goBack()">&larr; 戻る</button>
+        <h1 class="header-title" id="horseNameTitle">推しウマ詳細</h1>
+        <button class="edit-btn" onclick="editHorse()">編集</button>
+    </header>
+
+    <main class="main-content detail-content">
+        <!-- 馬の基本情報 -->
+        <div class="horse-info-card">
+            <div class="horse-images" id="horseImages">
+                <!-- 画像ギャラリーが動的に挿入されます -->
+            </div>
+            
+            <div class="horse-basic-info">
+                <h2 id="horseName">馬名</h2>
+                <p id="horseComment" class="horse-comment">応援コメント</p>
+                
+                <div class="jra-link-section">
+                    <button id="jraLinkBtn" class="jra-link-btn" onclick="showJraModal()" style="display: none;">
+                        JRA成績を見る
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 応援記録セクション -->
+        <div class="records-section">
+            <div class="section-header">
+                <h3>応援記録</h3>
+                <button class="add-record-btn" onclick="showAddRecordForm()">＋ 記録追加</button>
+            </div>
+            
+            <div id="recordsList" class="records-list">
+                <!-- 応援記録が動的に挿入されます -->
+            </div>
+            
+            <div id="emptyRecords" class="empty-state" style="display: none;">
+                <p>まだ応援記録がありません</p>
+                <button onclick="showAddRecordForm()">最初の記録を追加する</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- 記録追加・編集フォームモーダル -->
+    <div id="recordModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="recordModalTitle">応援記録追加</h2>
+                <button class="close-btn" onclick="hideRecordForm()">&times;</button>
+            </div>
+            
+            <form id="recordForm" class="record-form">
+                <input type="hidden" id="editRecordId" value="">
+                
+                <div class="form-group">
+                    <label for="recordType">記録タイプ</label>
+                    <select id="recordType">
+                        <option value="race">レース観戦</option>
+                        <option value="training">調教見学</option>
+                        <option value="other">その他</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="recordTitle">タイトル *</label>
+                    <input type="text" id="recordTitle" required maxlength="100" placeholder="例：〇〇レース観戦">
+                </div>
+
+                <div class="form-group">
+                    <label for="recordDate">日付</label>
+                    <input type="date" id="recordDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="recordContent">記録内容</label>
+                    <textarea id="recordContent" rows="5" maxlength="1000" placeholder="レースの感想や思い出を記録してください"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" onclick="hideRecordForm()">キャンセル</button>
+                    <button type="submit">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JRA成績表示モーダル -->
+    <div id="jraModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>JRA成績ページ</h2>
+                <button class="close-btn" onclick="hideJraModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>外部サイト（JRA）に移動します。</p>
+                <div class="form-actions">
+                    <button onclick="hideJraModal()">キャンセル</button>
+                    <button id="openJraLink" onclick="openJraUrl()">JRAサイトを開く</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 画像拡大表示モーダル -->
+    <div id="imageModal" class="modal" style="display: none;">
+        <div class="modal-content image-modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="hideImageModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="enlargedImage" src="" alt="拡大画像">
+                <p id="imageCaption"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // URLパラメータから馬のIDを取得して詳細情報を表示
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const horseId = urlParams.get('id');
+            if (horseId) {
+                loadHorseDetail(horseId);
+            } else {
+                // IDがない場合は一覧に戻る
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>
